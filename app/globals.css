@@ -125,7 +125,9 @@
     @apply bg-background text-foreground;
   }
 
-  /* Hide v0 badge/watermark - comprehensive targeting */
+  /* Ultra-aggressive v0 watermark removal */
+
+  /* Hide by class and ID patterns */
   [class*="v0"],
   [class*="V0"],
   [class*="vercel"],
@@ -145,12 +147,7 @@
   [data-v0],
   [data-vercel],
   [data-badge],
-  [data-watermark],
-  a[href*="v0.dev"],
-  a[href*="v0.app"],
-  a[href*="vercel.com"],
-  button:has(a[href*="v0"]),
-  div:has(a[href*="v0"]) {
+  [data-watermark] {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
@@ -160,16 +157,30 @@
     overflow: hidden !important;
     position: absolute !important;
     left: -9999px !important;
+    top: -9999px !important;
+    clip: rect(0, 0, 0, 0) !important;
   }
 
-  /* Hide any fixed/absolute positioned branding */
+  /* Hide links to v0/vercel */
+  a[href*="v0.dev"],
+  a[href*="v0.app"],
+  a[href*="vercel.com"],
+  button:has(a[href*="v0"]),
+  div:has(a[href*="v0"]),
+  div:has(a[href*="vercel"]) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* Hide fixed/absolute positioned elements with branding */
   div[style*="position: fixed"],
   div[style*="position: absolute"],
   div[style*="position:fixed"],
   div[style*="position:absolute"] {
-    &:has(a[href*="v0.dev"]),
-    &:has(a[href*="v0.app"]),
-    &:has(a[href*="vercel.com"]),
+    &:has(a[href*="v0"]),
+    &:has(a[href*="vercel"]),
     &:has(svg),
     &:has(img[alt*="v0"]),
     &:has(img[alt*="vercel"]) {
@@ -179,7 +190,7 @@
     }
   }
 
-  /* Additional watermark hiding */
+  /* Hide iframes with v0/vercel */
   iframe[src*="v0"],
   iframe[src*="vercel"],
   iframe[title*="v0"],
@@ -187,20 +198,41 @@
     display: none !important;
   }
 
-  /* Hide elements with specific z-index ranges commonly used for overlays */
+  /* Hide high z-index overlays */
   [style*="z-index: 999"],
   [style*="z-index: 9999"],
+  [style*="z-index: 99999"],
   [style*="z-index:999"],
-  [style*="z-index:9999"] {
+  [style*="z-index:9999"],
+  [style*="z-index:99999"] {
     &:has(a),
-    &:has(button) {
+    &:has(button),
+    &:has(svg) {
       display: none !important;
+      visibility: hidden !important;
     }
   }
 
-  /* Target common badge/watermark positioning patterns */
-  body > div:last-child:has(a[href*="v0"]),
-  body > div:last-child:has(a[href*="vercel"]) {
+  /* Target last child divs */
+  body > div:last-child:has(a),
+  body > div:last-of-type:has(a),
+  html > div:last-child:has(a) {
     display: none !important;
+  }
+
+  /* Hide elements at bottom */
+  [style*="bottom: 0"],
+  [style*="bottom:0"],
+  [style*="bottom: 1"],
+  [style*="bottom: 2"],
+  [style*="bottom:1"],
+  [style*="bottom:2"] {
+    &:has(a[href*="v0"]),
+    &:has(a[href*="vercel"]) {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
   }
 }
