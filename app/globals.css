@@ -4,76 +4,75 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Cash App light theme colors */
-  --background: oklch(0.99 0 0);
-  --foreground: oklch(0.2 0 0);
-  --card: oklch(0.98 0 0);
-  --card-foreground: oklch(0.2 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0 0);
-  --primary: oklch(0.25 0 0);
-  --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.95 0 0);
-  --secondary-foreground: oklch(0.25 0 0);
-  --muted: oklch(0.96 0 0);
-  --muted-foreground: oklch(0.55 0 0);
-  --accent: oklch(0.65 0.25 145);
-  --accent-foreground: oklch(0.99 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.99 0 0);
-  --border: oklch(0.9 0 0);
-  --input: oklch(0.92 0 0);
-  --ring: oklch(0.65 0.25 145);
-  --chart-1: oklch(0.65 0.25 145);
-  --chart-2: oklch(0.25 0 0);
-  --chart-3: oklch(0.55 0.2 200);
-  --chart-4: oklch(0.55 0.18 280);
-  --chart-5: oklch(0.7 0.14 140);
-  --radius: 0.75rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.2 0 0);
-  --sidebar-primary: oklch(0.25 0 0);
-  --sidebar-primary-foreground: oklch(0.99 0 0);
-  --sidebar-accent: oklch(0.96 0 0);
-  --sidebar-accent-foreground: oklch(0.25 0 0);
-  --sidebar-border: oklch(0.9 0 0);
-  --sidebar-ring: oklch(0.25 0 0);
+  /* Updated to Bank of America color scheme */
+  --background: #f5f5f5; /* Light gray background like BoA */
+  --foreground: #333333;
+  --card: #ffffff;
+  --card-foreground: #333333;
+  --popover: #ffffff;
+  --popover-foreground: #333333;
+  --primary: #012169; /* Bank of America blue */
+  --primary-foreground: #ffffff;
+  --secondary: #f8f9fa;
+  --secondary-foreground: #333333;
+  --muted: #f8f9fa;
+  --muted-foreground: #666666;
+  --accent: #e31837; /* Bank of America red */
+  --accent-foreground: #ffffff;
+  --destructive: #dc3545;
+  --destructive-foreground: #ffffff;
+  --border: #dee2e6;
+  --input: #ffffff;
+  --ring: #0066cc; /* BoA blue for focus rings */
+  --chart-1: #012169;
+  --chart-2: #e31837;
+  --chart-3: #0066cc;
+  --chart-4: #28a745;
+  --chart-5: #ffc107;
+  --radius: 0.375rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #333333;
+  --sidebar-primary: #012169;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f8f9fa;
+  --sidebar-accent-foreground: #333333;
+  --sidebar-border: #dee2e6;
+  --sidebar-ring: #012169;
 }
 
 .dark {
-  /* Cash App dark theme colors with green accent */
-  --background: oklch(0.12 0 0);
-  --foreground: oklch(0.98 0 0);
-  --card: oklch(0.15 0 0);
-  --card-foreground: oklch(0.98 0 0);
-  --popover: oklch(0.15 0 0);
-  --popover-foreground: oklch(0.98 0 0);
-  --primary: oklch(0.98 0 0);
-  --primary-foreground: oklch(0.12 0 0);
-  --secondary: oklch(0.2 0 0);
-  --secondary-foreground: oklch(0.98 0 0);
-  --muted: oklch(0.2 0 0);
-  --muted-foreground: oklch(0.6 0 0);
-  --accent: oklch(0.65 0.25 145);
-  --accent-foreground: oklch(0.12 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.2 0 0);
-  --input: oklch(0.2 0 0);
-  --ring: oklch(0.65 0.25 145);
-  --chart-1: oklch(0.65 0.25 145);
-  --chart-2: oklch(0.55 0.15 200);
-  --chart-3: oklch(0.65 0.15 200);
-  --chart-4: oklch(0.55 0.18 280);
-  --chart-5: oklch(0.7 0.14 140);
-  --sidebar: oklch(0.15 0 0);
-  --sidebar-foreground: oklch(0.98 0 0);
-  --sidebar-primary: oklch(0.65 0.25 145);
-  --sidebar-primary-foreground: oklch(0.12 0 0);
-  --sidebar-accent: oklch(0.2 0 0);
-  --sidebar-accent-foreground: oklch(0.98 0 0);
-  --sidebar-border: oklch(0.2 0 0);
-  --sidebar-ring: oklch(0.65 0.25 145);
+  --background: #1a1a1a;
+  --foreground: #ffffff;
+  --card: #2d2d2d;
+  --card-foreground: #ffffff;
+  --popover: #2d2d2d;
+  --popover-foreground: #ffffff;
+  --primary: #4a90e2;
+  --primary-foreground: #ffffff;
+  --secondary: #404040;
+  --secondary-foreground: #ffffff;
+  --muted: #404040;
+  --muted-foreground: #cccccc;
+  --accent: #ff6b6b;
+  --accent-foreground: #ffffff;
+  --destructive: #ff4444;
+  --destructive-foreground: #ffffff;
+  --border: #404040;
+  --input: #2d2d2d;
+  --ring: #4a90e2;
+  --chart-1: #4a90e2;
+  --chart-2: #ff6b6b;
+  --chart-3: #4ecdc4;
+  --chart-4: #45b7d1;
+  --chart-5: #f9ca24;
+  --sidebar: #2d2d2d;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #4a90e2;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #404040;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #404040;
+  --sidebar-ring: #4a90e2;
 }
 
 @theme inline {
@@ -123,116 +122,5 @@
   }
   body {
     @apply bg-background text-foreground;
-  }
-
-  /* Ultra-aggressive v0 watermark removal */
-
-  /* Hide by class and ID patterns */
-  [class*="v0"],
-  [class*="V0"],
-  [class*="vercel"],
-  [class*="Vercel"],
-  [class*="badge"],
-  [class*="Badge"],
-  [class*="watermark"],
-  [class*="Watermark"],
-  [class*="branding"],
-  [class*="Branding"],
-  [id*="v0"],
-  [id*="V0"],
-  [id*="vercel"],
-  [id*="Vercel"],
-  [id*="badge"],
-  [id*="watermark"],
-  [data-v0],
-  [data-vercel],
-  [data-badge],
-  [data-watermark] {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    width: 0 !important;
-    height: 0 !important;
-    overflow: hidden !important;
-    position: absolute !important;
-    left: -9999px !important;
-    top: -9999px !important;
-    clip: rect(0, 0, 0, 0) !important;
-  }
-
-  /* Hide links to v0/vercel */
-  a[href*="v0.dev"],
-  a[href*="v0.app"],
-  a[href*="vercel.com"],
-  button:has(a[href*="v0"]),
-  div:has(a[href*="v0"]),
-  div:has(a[href*="vercel"]) {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-
-  /* Hide fixed/absolute positioned elements with branding */
-  div[style*="position: fixed"],
-  div[style*="position: absolute"],
-  div[style*="position:fixed"],
-  div[style*="position:absolute"] {
-    &:has(a[href*="v0"]),
-    &:has(a[href*="vercel"]),
-    &:has(svg),
-    &:has(img[alt*="v0"]),
-    &:has(img[alt*="vercel"]) {
-      display: none !important;
-      visibility: hidden !important;
-      opacity: 0 !important;
-    }
-  }
-
-  /* Hide iframes with v0/vercel */
-  iframe[src*="v0"],
-  iframe[src*="vercel"],
-  iframe[title*="v0"],
-  iframe[title*="vercel"] {
-    display: none !important;
-  }
-
-  /* Hide high z-index overlays */
-  [style*="z-index: 999"],
-  [style*="z-index: 9999"],
-  [style*="z-index: 99999"],
-  [style*="z-index:999"],
-  [style*="z-index:9999"],
-  [style*="z-index:99999"] {
-    &:has(a),
-    &:has(button),
-    &:has(svg) {
-      display: none !important;
-      visibility: hidden !important;
-    }
-  }
-
-  /* Target last child divs */
-  body > div:last-child:has(a),
-  body > div:last-of-type:has(a),
-  html > div:last-child:has(a) {
-    display: none !important;
-  }
-
-  /* Hide elements at bottom */
-  [style*="bottom: 0"],
-  [style*="bottom:0"],
-  [style*="bottom: 1"],
-  [style*="bottom: 2"],
-  [style*="bottom:1"],
-  [style*="bottom:2"] {
-    &:has(a[href*="v0"]),
-    &:has(a[href*="vercel"]) {
-      display: none !important;
-      visibility: hidden !important;
-      opacity: 0 !important;
-      pointer-events: none !important;
-    }
   }
 }

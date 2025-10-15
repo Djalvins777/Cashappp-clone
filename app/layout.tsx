@@ -1,9 +1,14 @@
-import type React from "react"
-import { GeistSans } from "geist/font/sans"
-import { GeistMono } from "geist/font/mono"
-import "./globals.css"
-import ClientLayout from "./client-layout"
-import { RemoveWatermark } from "@/components/remove-watermark"
+import type { Metadata } from 'next'
+import { GeistSans } from 'geist/font/sans'
+import { GeistMono } from 'geist/font/mono'
+import { Analytics } from '@vercel/analytics/next'
+import './globals.css'
+
+export const metadata: Metadata = {
+  title: 'v0 App',
+  description: 'Created with v0',
+  generator: 'v0.app',
+}
 
 export default function RootLayout({
   children,
@@ -12,14 +17,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        <RemoveWatermark />
-        <ClientLayout>{children}</ClientLayout>
+      <body className={`font-sans antialiased ${GeistSans.variable} ${GeistMono.variable}`}>
+        {children}
+        <Analytics />
       </body>
     </html>
   )
 }
-
-export const metadata = {
-      generator: 'v0.app'
-    };
