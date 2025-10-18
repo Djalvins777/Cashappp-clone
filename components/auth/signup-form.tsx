@@ -44,6 +44,8 @@ export function SignupForm() {
     try {
       const supabase = getSupabaseBrowserClient()
 
+      console.log("[v0] Starting signup process for:", formData.email)
+
       // Sign up the user
       const { data, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
@@ -54,16 +56,19 @@ export function SignupForm() {
             full_name: formData.fullName,
             phone: formData.phone,
           },
-          // Disable Supabase's automatic confirmation email
-          // We'll send our own verification code instead
         },
       })
 
       if (signUpError) {
+        console.error("[v0] Signup error:", signUpError)
         throw signUpError
       }
 
+      console.log("[v0] User created successfully:", data.user?.id)
+
       if (data.user) {
+        console.log("[v0] Sending verification code...")
+
         const response = await fetch("/api/auth/send-email-verification", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -74,9 +79,12 @@ export function SignupForm() {
         })
 
         if (!response.ok) {
+          const errorData = await response.json()
+          console.error("[v0] Failed to send verification code:", errorData)
           throw new Error("Failed to send verification code")
         }
 
+        console.log("[v0] Verification code sent, redirecting to verification page")
         router.push(`/verify-email?userId=${data.user.id}&email=${encodeURIComponent(formData.email)}`)
       }
     } catch (err: any) {

@@ -141,6 +141,8 @@ export async function createVerificationCode(userId: string, codeType: "login" |
   const code = await generateVerificationCode()
   const expiresAt = new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
 
+  console.log("[v0] Creating verification code for user:", userId, "type:", codeType)
+
   const { data, error } = await supabase
     .from("verification_codes")
     .insert({
@@ -157,6 +159,7 @@ export async function createVerificationCode(userId: string, codeType: "login" |
     throw new Error("Failed to create verification code")
   }
 
+  console.log("[v0] Verification code created successfully")
   return { code, expiresAt }
 }
 
