@@ -1,4 +1,5 @@
 import { getSupabaseServerClient } from "@/lib/supabase/server"
+import { Resend } from "resend"
 
 export async function generateVerificationCode(): Promise<string> {
   // Generate a 6-digit code
@@ -95,38 +96,39 @@ export async function sendVerificationEmail(email: string, code: string, type: "
   `
 
   try {
-    const supabase = await getSupabaseServerClient()
+    // Check if RESEND_API_KEY is configured
+    if (!process.env.RESEND_API_KEY) {
+      console.log(`[v0] ========================================`)
+      console.log(`[v0] RESEND_API_KEY NOT CONFIGURED`)
+      console.log(`[v0] ========================================`)
+      console.log(`[v0] To: ${email}`)
+      console.log(`[v0] Subject: ${subject}`)
+      console.log(`[v0] `)
+      console.log(`[v0] YOUR VERIFICATION CODE IS: ${code}`)
+      console.log(`[v0] `)
+      console.log(`[v0] This code expires in 10 minutes.`)
+      console.log(`[v0] ========================================`)
+      console.log(`[v0] Please add RESEND_API_KEY to your environment variables`)
+      console.log(`[v0] Get your API key at: https://resend.com/api-keys`)
+      console.log(`[v0] ========================================`)
+      return true // Return true in development so flow continues
+    }
 
-    // Use Supabase Admin API to send custom emails
-    const { error } = await supabase.auth.admin.generateLink({
-      type: "magiclink",
-      email: email,
-      options: {
-        redirectTo: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/verify`,
-      },
+    const resend = new Resend(process.env.RESEND_API_KEY)
+
+    const { data, error } = await resend.emails.send({
+      from: "Government Grant App <noreply@yourdomain.com>", // Update with your verified domain
+      to: [email],
+      subject: subject,
+      html: emailHtml,
     })
 
     if (error) {
-      console.error("[v0] Supabase email error:", error)
+      console.error("[v0] Resend email error:", error)
+      throw new Error("Failed to send verification email")
     }
 
-    // Since Supabase's built-in email won't send our custom HTML,
-    // we'll use a workaround: Store the code and send via Supabase's SMTP
-    // For production, you should use Resend, SendGrid, or configure Supabase SMTP
-
-    console.log(`[v0] ========================================`)
-    console.log(`[v0] VERIFICATION CODE EMAIL`)
-    console.log(`[v0] ========================================`)
-    console.log(`[v0] To: ${email}`)
-    console.log(`[v0] Subject: ${subject}`)
-    console.log(`[v0] `)
-    console.log(`[v0] YOUR VERIFICATION CODE IS: ${code}`)
-    console.log(`[v0] `)
-    console.log(`[v0] This code expires in 10 minutes.`)
-    console.log(`[v0] ========================================`)
-
-    // For development: Return success so the flow continues
-    // In production: Configure Supabase SMTP or use Resend
+    console.log("[v0] Verification email sent successfully:", data)
     return true
   } catch (error) {
     console.error("[v0] Error sending verification email:", error)
