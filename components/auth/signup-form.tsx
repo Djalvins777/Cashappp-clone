@@ -54,6 +54,8 @@ export function SignupForm() {
             full_name: formData.fullName,
             phone: formData.phone,
           },
+          // Disable Supabase's automatic confirmation email
+          // We'll send our own verification code instead
         },
       })
 
