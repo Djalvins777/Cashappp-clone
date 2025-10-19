@@ -1,158 +1,193 @@
-import { redirect } from "next/navigation"
-import { getSupabaseServerClient } from "@/lib/supabase/server"
+"use client"
+
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import { useAuth } from "@/lib/auth"
+import { Mail, LogOut, DollarSign, ArrowRightLeft, CreditCard, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { OfficialFooter } from "@/components/layout/official-footer"
+import { Card } from "@/components/ui/card"
 
-export default async function HomePage() {
-  const supabase = await getSupabaseServerClient()
+export default function DashboardPage() {
+  const { isAuthenticated, fullName, logout } = useAuth()
+  const router = useRouter()
+  const [activeTab, setActiveTab] = useState("accounts")
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/login")
+    }
+  }, [isAuthenticated, router])
 
-  // Redirect authenticated users to dashboard
-  if (user) {
-    redirect("/dashboard")
+  if (!isAuthenticated) {
+    return null
+  }
+
+  const totalBalance = 1356091 + 3887265 + 0
+
+  const accounts = [
+    {
+      name: "Personal Checking",
+      number: "3340",
+      balance: 1356091.0,
+      type: "checking",
+    },
+    {
+      name: "Personal Saving",
+      number: "5125",
+      balance: 3887265.0,
+      type: "savings",
+    },
+    {
+      name: "Home Providing",
+      number: "9314",
+      balance: 0.0,
+      type: "providing",
+    },
+  ]
+
+  const handleLogout = () => {
+    logout()
+    router.push("/login")
+  }
+
+  const handleTabClick = (tab: string, path: string) => {
+    setActiveTab(tab)
+    router.push(path)
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#1a365d] to-[#2c5282] flex flex-col">
-      {/* Official Government Header */}
-      <div className="border-b border-blue-700 bg-[#1e3a5f]">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="flex h-16 w-16 items-center justify-center">
-                <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bf722ceb-e7b9-4590-948e-681c5bcaffa1-dgMfg1h5S5kjnl0vai88AXFuzuE0Jy.jpeg"
-                  alt="Department of Health & Human Services USA Seal"
-                  className="h-full w-full object-contain"
-                />
+    <div className="min-h-screen bg-[#f5f3f0] flex flex-col">
+      <header className="bg-white border-b border-gray-200 px-4 py-3">
+        <div className="flex items-center justify-between max-w-md mx-auto">
+          <div className="flex items-center gap-2">
+            <span className="text-[#012169] font-bold text-lg tracking-tight">BANK OF AMERICA</span>
+            <div className="flex flex-col gap-0.5">
+              <div className="w-6 h-0.5 bg-[#e31837]"></div>
+              <div className="w-6 h-0.5 bg-[#e31837]"></div>
+              <div className="w-6 h-0.5 bg-[#e31837]"></div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <Button variant="ghost" size="icon" className="relative">
+              <Mail className="w-5 h-5 text-gray-600" />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-[#e31837] rounded-full"></span>
+            </Button>
+            <Button variant="ghost" size="icon" onClick={handleLogout}>
+              <LogOut className="w-5 h-5 text-gray-600" />
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      <main className="flex-1 overflow-y-auto pb-20">
+        <div className="max-w-md mx-auto px-4 py-6 space-y-6">
+          <div>
+            <h1 className="text-2xl font-normal text-gray-800">Hello, {fullName}</h1>
+            <p className="text-sm text-gray-600 mt-1">Preferred Rewards Platinum</p>
+          </div>
+
+          <div>
+            <h2 className="text-base font-normal text-gray-800 mb-3">My Rewards</h2>
+            <Card className="p-4 bg-white border-gray-200">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-[#e31837] rounded-full flex items-center justify-center">
+                  <span className="text-white text-xs font-bold">R</span>
+                </div>
+                <div>
+                  <p className="text-base font-medium text-gray-800">Your Rewards</p>
+                  <p className="text-sm text-gray-600">Boa rewards</p>
+                </div>
               </div>
-              <div>
-                <h1 className="text-xl font-bold text-white">U.S. Department of Health & Human Services</h1>
-                <p className="text-sm text-blue-200">MAKE AMERICA HEALTHY AGAIN</p>
+            </Card>
+          </div>
+
+          <div className="bg-gradient-to-r from-[#8b2332] to-[#c84c4c] rounded-lg p-4 text-white">
+            <div className="flex items-center justify-between">
+              <span className="text-base font-medium">Bank of America</span>
+              <span className="text-2xl font-bold">
+                ${totalBalance.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+              </span>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            {accounts.map((account) => (
+              <Card
+                key={account.number}
+                onClick={() => router.push(`/accounts/${account.type}`)}
+                className="p-4 bg-white border-gray-200 cursor-pointer hover:shadow-md transition-shadow"
+              >
+                <div className="space-y-1">
+                  <p className="text-sm text-gray-600">
+                    {account.name} - {account.number}
+                  </p>
+                  <p className="text-2xl font-bold text-gray-800">
+                    ${account.balance.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                  </p>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          <div className="space-y-3">
+            <Card className="p-4 bg-gradient-to-r from-[#8b2332] to-[#012169] text-white border-0">
+              <div className="flex items-center justify-between">
+                <span className="text-base font-medium">Credit Card</span>
+                <span className="text-xl font-bold">$0.00</span>
               </div>
-            </div>
-            <div className="flex gap-3">
-              <Link href="/login">
-                <Button variant="outline" className="border-white text-white hover:bg-white/10 bg-transparent">
-                  Sign In
-                </Button>
-              </Link>
-              <Link href="/signup">
-                <Button className="bg-blue-500 hover:bg-blue-600">Get Started</Button>
-              </Link>
-            </div>
+            </Card>
+
+            <Card className="p-4 bg-white border-gray-200">
+              <div className="flex items-center justify-between">
+                <span className="text-base text-gray-800">Investment</span>
+                <span className="text-xl font-bold text-gray-800">$0.00</span>
+              </div>
+            </Card>
           </div>
         </div>
-      </div>
+      </main>
 
-      {/* Hero Section */}
-      <div className="container mx-auto px-4 py-16 flex-1">
-        <div className="mx-auto max-w-4xl text-center">
-          <div className="mb-8 inline-block rounded-full bg-blue-500/20 px-4 py-2 text-sm font-semibold text-blue-200 border border-blue-400">
-            Official U.S. Government Website
-          </div>
-          <h1 className="mb-6 text-balance text-5xl font-bold text-white">Access Government Grant Opportunities</h1>
-          <p className="mb-8 text-pretty text-xl text-blue-100">
-            Apply for federal grants and funding opportunities. Secure, verified, and accessible to all eligible
-            applicants.
-          </p>
-          <div className="flex justify-center gap-4">
-            <Link href="/signup">
-              <Button size="lg" className="bg-blue-500 hover:bg-blue-600 text-white">
-                Create Account
-              </Button>
-            </Link>
-            <Link href="/login">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 bg-transparent">
-                Sign In
-              </Button>
-            </Link>
-          </div>
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-3 safe-area-inset-bottom">
+        <div className="max-w-md mx-auto flex items-center justify-around">
+          <button
+            onClick={() => handleTabClick("accounts", "/")}
+            className={`flex flex-col items-center gap-1 ${
+              activeTab === "accounts" ? "text-[#012169]" : "text-gray-600"
+            }`}
+          >
+            <DollarSign className="w-6 h-6" />
+            <span className="text-xs font-medium">Accounts</span>
+          </button>
+
+          <button
+            onClick={() => handleTabClick("transfer", "/transfers")}
+            className={`flex flex-col items-center gap-1 ${
+              activeTab === "transfer" ? "text-[#012169]" : "text-gray-600"
+            }`}
+          >
+            <ArrowRightLeft className="w-6 h-6" />
+            <span className="text-xs font-medium">Pay & Transfer</span>
+          </button>
+
+          <button
+            onClick={() => handleTabClick("cards", "/cards")}
+            className={`flex flex-col items-center gap-1 ${activeTab === "cards" ? "text-[#012169]" : "text-gray-600"}`}
+          >
+            <CreditCard className="w-6 h-6" />
+            <span className="text-xs font-medium">My Cards</span>
+          </button>
+
+          <button
+            onClick={() => handleTabClick("history", "/history")}
+            className={`flex flex-col items-center gap-1 ${
+              activeTab === "history" ? "text-[#012169]" : "text-gray-600"
+            }`}
+          >
+            <Clock className="w-6 h-6" />
+            <span className="text-xs font-medium">History</span>
+          </button>
         </div>
-
-        {/* Features */}
-        <div className="mx-auto mt-20 grid max-w-5xl gap-8 md:grid-cols-3">
-          <div className="rounded-lg border border-blue-600 bg-[#2d3748] p-6 text-center">
-            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-500/20">
-              <svg className="h-6 w-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                />
-              </svg>
-            </div>
-            <h3 className="mb-2 font-semibold text-white">Secure & Verified</h3>
-            <p className="text-sm text-blue-200">
-              Two-factor authentication and email verification ensure your account security
-            </p>
-          </div>
-
-          <div className="rounded-lg border border-blue-600 bg-[#2d3748] p-6 text-center">
-            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-500/20">
-              <svg className="h-6 w-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
-              </svg>
-            </div>
-            <h3 className="mb-2 font-semibold text-white">Easy Application</h3>
-            <p className="text-sm text-blue-200">Streamlined application process with step-by-step guidance</p>
-          </div>
-
-          <div className="rounded-lg border border-blue-600 bg-[#2d3748] p-6 text-center">
-            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-500/20">
-              <svg className="h-6 w-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </div>
-            <h3 className="mb-2 font-semibold text-white">Track Progress</h3>
-            <p className="text-sm text-blue-200">Monitor your application status and receive real-time updates</p>
-          </div>
-        </div>
-
-        {/* Current Opportunities Banner */}
-        <div className="mx-auto mt-16 max-w-4xl rounded-lg border border-blue-500 bg-blue-600/20 p-8">
-          <div className="flex items-start gap-4">
-            <div className="flex-shrink-0">
-              <svg className="h-8 w-8 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"
-                />
-              </svg>
-            </div>
-            <div className="flex-1">
-              <h3 className="text-xl font-bold text-white">WE CAN DO THIS!!! APPLY NOW STILL AVAILABLE</h3>
-              <p className="mt-2 text-blue-100">
-                The Department of Health & Human Services has announced $16,000 in new grant funding for community
-                health initiatives. Applications are being accepted now through April 30, 2025.
-              </p>
-              <Link href="/signup">
-                <Button className="mt-4 bg-blue-500 hover:bg-blue-600">Apply Today</Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Official Government Seals Footer */}
-      <OfficialFooter />
+      </nav>
     </div>
   )
 }
