@@ -1,13 +1,8 @@
-import { LoginForm } from "@/components/auth/login-form"
+import { SignupForm } from "@/components/auth/signup-form"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Alert, AlertDescription } from "@/components/ui/alert"
 import { OfficialFooter } from "@/components/layout/official-footer"
 
-export default function LoginPage({
-  searchParams,
-}: {
-  searchParams: { verified?: string; error?: string }
-}) {
+export default function SignupPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col">
       {/* Official Government Header */}
@@ -32,34 +27,7 @@ export default function LoginPage({
       {/* Main Content */}
       <div className="container mx-auto px-4 py-12 flex-1">
         <div className="mx-auto max-w-md">
-          {/* Success Message */}
-          {searchParams.verified === "true" && (
-            <Alert className="mb-6 border-green-200 bg-green-50">
-              <AlertDescription className="text-green-900">
-                <div className="flex items-start gap-3">
-                  <svg
-                    className="h-5 w-5 flex-shrink-0 text-green-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  <div>
-                    <p className="font-semibold">Email Verified Successfully!</p>
-                    <p className="mt-1">You can now log in to your account.</p>
-                  </div>
-                </div>
-              </AlertDescription>
-            </Alert>
-          )}
-
-          {/* Security Notice */}
+          {/* Official Notice */}
           <div className="mb-6 rounded-lg border border-blue-200 bg-blue-50 p-4">
             <div className="flex gap-3">
               <svg
@@ -72,14 +40,14 @@ export default function LoginPage({
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
               <div className="text-sm text-blue-900">
-                <p className="font-semibold">Two-Factor Authentication Enabled</p>
+                <p className="font-semibold">Official Government Website</p>
                 <p className="mt-1">
-                  For your security, a verification code will be sent to your email address after entering your
-                  credentials.
+                  This is a secure government portal. Your information is protected and will only be used for grant
+                  application purposes.
                 </p>
               </div>
             </div>
@@ -87,30 +55,30 @@ export default function LoginPage({
 
           <Card className="border-gray-200 shadow-lg">
             <CardHeader className="space-y-1">
-              <CardTitle className="text-2xl font-bold text-gray-900">Sign In</CardTitle>
+              <CardTitle className="text-2xl font-bold text-gray-900">Create Your Account</CardTitle>
               <CardDescription className="text-gray-600">
-                Access your government grant application portal
+                Register to access government grant applications
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <LoginForm />
+              <SignupForm />
             </CardContent>
           </Card>
 
           {/* Footer Notice */}
           <div className="mt-6 text-center text-sm text-gray-600">
             <p>
-              Don't have an account?{" "}
-              <a href="/signup" className="font-semibold text-blue-600 hover:text-blue-700">
-                Create one here
+              Already have an account?{" "}
+              <a href="/login" className="font-semibold text-blue-600 hover:text-blue-700">
+                Sign in here
               </a>
             </p>
           </div>
 
           <div className="mt-8 rounded-lg border border-gray-200 bg-gray-50 p-4">
             <p className="text-xs text-gray-600">
-              This is a secure government system. Unauthorized access attempts are monitored and may result in legal
-              action. By logging in, you acknowledge that you are authorized to access this system.
+              By creating an account, you agree to comply with all federal regulations and certify that the information
+              provided is accurate and truthful. Misrepresentation may result in legal consequences.
             </p>
           </div>
         </div>

